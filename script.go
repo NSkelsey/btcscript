@@ -11,13 +11,14 @@ import (
 	"encoding/binary"
 	"errors"
 	"fmt"
+	"io"
+	"time"
+
 	"github.com/conformal/btcec"
 	"github.com/conformal/btcnet"
 	"github.com/conformal/btcutil"
 	"github.com/conformal/btcwire"
 	"github.com/davecgh/go-spew/spew"
-	"io"
-	"time"
 )
 
 var (
@@ -753,7 +754,7 @@ func (m *Script) disasm(scriptidx int, scriptoff int) string {
 }
 
 // subScript will return the script since the last OP_CODESEPARATOR
-func (s *Script) subScript() []parsedOpcode {
+func (s *Script) SubScript() []parsedOpcode {
 	return s.scripts[s.scriptidx][s.lastcodesep:]
 }
 

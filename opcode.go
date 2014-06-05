@@ -6,17 +6,18 @@ package btcscript
 
 import (
 	"bytes"
-	"code.google.com/p/go.crypto/ripemd160"
 	"crypto/ecdsa"
 	"crypto/sha1"
 	"encoding/binary"
 	"fmt"
+	"hash"
+	"math/big"
+
+	"code.google.com/p/go.crypto/ripemd160"
 	"github.com/conformal/btcec"
 	"github.com/conformal/btcwire"
 	"github.com/conformal/fastsha256"
 	"github.com/davecgh/go-spew/spew"
-	"hash"
-	"math/big"
 )
 
 // An opcode defines the information related to a btcscript opcode.
@@ -1775,7 +1776,7 @@ func opcodeCheckSig(op *parsedOpcode, s *Script) error {
 
 	// Get script from the last OP_CODESEPARATOR and without any subsequent
 	// OP_CODESEPARATORs
-	subScript := s.subScript()
+	subScript := s.SubScript()
 
 	// Unlikely to hit any cases here, but remove the signature from
 	// the script if present.
@@ -1907,7 +1908,7 @@ func opcodeCheckMultiSig(op *parsedOpcode, s *Script) error {
 	}
 
 	// Trim OP_CODESEPARATORs
-	script := s.subScript()
+	script := s.SubScript()
 
 	// Remove any of the signatures that happen to be in the script.
 	// can't sign somthing containing the signature you're making, after
